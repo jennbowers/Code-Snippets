@@ -6,5 +6,28 @@
   </head>
   <body>
     <h1>Welcome to CodeSnippets</h1>
+    <div class="sign-up-div">
+      <h3>Sign up for CodeSnippet</h3>
+      {{#signupMsg}}
+      {{.}}
+      {{/signupMsg}}
+      <form class="sign-up" action="/signup" method="post">
+        <input type="text" name="username" placeholder="create username">
+        <input type="text" name="password" placeholder="create password">
+        <input type="submit" name="submit" value="Log In">
+      </form>
+    </div>
+    <div class="log-in-div">
+      <h3>Log in to CodeSnippet</h3>
+      {{#loginMsg}}
+      {{.}}
+      {{/loginMsg}}
+      <form class="log-in" action="/login" method="post">
+        <input type="text" name="username" placeholder="username goes here">
+        <input type="text" name="password" placeholder="password goes here">
+        <input type="submit" name="submit" value="Log In">
+      </form>
+    </div>
+
   </body>
 </html>

@@ -11,5 +11,9 @@ module.exports = (app) => {
 
   app.get('/api/sanity', welcomeController.sanityTest);
 
+  app.post('/login', welcomeController.loginWelcome);
+
+  app.post('/signup', welcomeController.signupWelcome);
+
 
 };
