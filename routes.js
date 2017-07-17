@@ -4,16 +4,40 @@ const detailController = require('./controllers/detail');
 const indexController = require('./controllers/index');
 const welcomeController = require('./controllers/welcome');
 
+// passport setup
+const passport = require('passport');
+const BasicStrategy = require('passport-http').BasicStrategy;
+
+passport.use(new BasicStrategy(
+  (username, password, done) => {
+    Users.findOne({username: username, password: password}).then(function(user) {
+      if(!user) {
+        return done(null, false);
+      } else {
+        return done(null, username);
+      }
+    });
+  }
+));
+
+// passport.authenticate('basic', {session: false});
 
 module.exports = (app) => {
   // app.get app.post etc goes in here with controller stuff
-  app.get('/', welcomeController.renderWelcome);
-
   app.get('/api/sanity', welcomeController.sanityTest);
 
+  // ------- welcome page
+  // renders welcome page and redirects from / if not logged in
+  app.get('/', welcomeController.renderWelcome);
+
+  // logging in, redirects to index if valid user
   app.post('/login', welcomeController.loginWelcome);
 
+  // signing up, auto logs in and redirects to index
   app.post('/signup', welcomeController.signupWelcome);
 
+  // ------- index page
+  // renders index page
+  app.get('/index', passport.authenticate('basic', { successRedirect: '/index', failureRedirect: '/' }),  indexController.renderIndex);
 
 };
