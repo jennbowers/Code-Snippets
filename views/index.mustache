@@ -5,19 +5,35 @@
     <title>Welcome</title>
   </head>
   <body>
+    <header>
+      <nav>
+        <span><a href="#">Home</a></span>
+        <span><a href="/create">Create a new Snippet</a></span>
+        <span><a href="/welcome">Log Out</a></span>
+      </nav>
+    </header>
     <h1>{{name}}'s CodeSnippets</h1>
+    <div class="search-language-div">
+      <form class="search-language-form" action="/language" method="post">
+        <label for="searchLanguage">Search for Code in a Specific Language</label>
+        <input type="text" name="searchLanguage" placeholder="Language">
+        <input type="submit" name="submit" value="Search">
+      </form>
+    </div>
+    <div class="search-tags-div">
+      <form class="search-tags-form" action="/tags" method="post">
+        <label for="searchTags">Search for Code with a Specific Tag</label>
+        <input type="text" name="searchTags" placeholder="Tag Name">
+        <input type="submit" name="submit" value="Search">
+      </form>
+    </div>
     {{#displaySnippets}}
     <h3>{{title}}</h3>
     <h4>{{language}}</h4>
     <p>{{body}}</p>
-    {{#notes}}
-    <p>{{.}}</p>
-    {{/notes}}
-    {{#tags}}
-    <ul>
-      <li>{{tagName}}</li>
-    </ul>
-    {{/tags}}
+    <form class="detail-snippet" action="/{{_id}}" method="post">
+      <input type="submit" name="submit" value="See More">
+    </form>
     {{/displaySnippets}}
   </body>
 </html>

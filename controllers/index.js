@@ -14,5 +14,16 @@ module.exports = {
       res.render('index', context);
     });
   },
+  searchLanguageIndex: (req, res) => {
+    var context = {
+      loggedIn: true,
+      name: req.session.username,
+      userId: req.session.userId,
+    };
+    Snippets.find({username: req.session.username, language: req.body.searchLanguage}).then((allSearchedSnippets) => {
+      context.displaySnippets = allSearchedSnippets;
+      res.render('index', context);
+    });
+  }
 
 };

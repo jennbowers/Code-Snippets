@@ -42,11 +42,15 @@ module.exports = (app) => {
   // renders index page
   app.get('/index', indexController.renderIndex);
 
+  // search for snippets in a specific language
+  app.post('/language', indexController.searchLanguageIndex);
+
   // ------ create page
   // renders create page
   app.get('/create', createController.renderCreate);
 
   // adds snippet to database
   app.post('/create', createController.addSnippetCreate);
+
 
 };

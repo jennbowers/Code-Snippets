@@ -13,6 +13,10 @@ const Users = require('../models/users');
 
 // create tests begin
 describe('creating a snippet successfully', () => {
+  afterEach((done) => {
+    Snippets.deleteMany({}).then(done());
+  });
+
   it('should create a snippet successfully', (done) => {
     const snippet = new Snippets({username: 'Matthew', title: 'test title3', body: 'test body', notes: 'test notes', language: 'test language', tags: [{tagName: 'tag1'}, {tagName: 'tag2'}]}).save().then((snippet) => {
       expect(snippet.username).to.be.a('string');
