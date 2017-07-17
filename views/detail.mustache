@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <span><a href="/index">Home</a></span>
+        <span><a href="/create">Create a new Snippet</a></span>
+        <span><a href="/welcome">Log Out</a></span>
+      </nav>
+    </header>
+    {{#displaySnippets}}
+    <h1>{{username}}'s CodeSnippets — {{title}}</h1>
+    <h4>{{language}}</h4>
+    <p>{{body}}</p>
+    <p>{{notes}}</p>
+    {{#tags}}
+    <ul>
+      <li>{{tagName}}</li>
+    </ul>
+    {{/tags}}
+    {{/displaySnippets}}
+  </body>
+</html>

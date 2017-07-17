@@ -31,29 +31,27 @@ module.exports = (app) => {
   // ------- welcome page
   // renders welcome page and redirects from / if not logged in
   app.get('/', welcomeController.renderWelcome);
-
   // logging in, redirects to index if valid user
   app.post('/login', welcomeController.loginWelcome);
-
   // signing up, auto logs in and redirects to index
   app.post('/signup', welcomeController.signupWelcome);
 
   // ------- index page
   // renders index page
   app.get('/index', indexController.renderIndex);
-
   // search for snippets in a specific language
   app.post('/language', indexController.searchLanguageIndex);
-
   // search for snippets with a specific tag
   app.post('/tags', indexController.searchTagsIndex);
 
   // ------ create page
   // renders create page
   app.get('/create', createController.renderCreate);
-
   // adds snippet to database
   app.post('/create', createController.addSnippetCreate);
 
+  // ------ detail page
+  // renders specific snippet
+  app.post('/:id', detailController.renderDetail);
 
 };
