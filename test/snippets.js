@@ -11,6 +11,38 @@ const createController = require('../controllers/create');
 const Snippets = require('../models/snippets');
 const Users = require('../models/users');
 
+// index tests begin
+describe('searching through snippets', () => {
+  // beforeEach((done) => {
+  //   Snippets.insertMany([
+  //     {username: 'JennBowers', title: 'test1', body: 'test code', notes: 'test notes', language: 'node.js', tags: [{tagName: 'node.js'}, {tagName: 'javascript'}]},
+  //     {username: 'JennBowers', title: 'test2', body: 'test code2', notes: 'test notes', language: 'java', tags: [{tagName: 'java'}, {tagName: 'back-end'}]},
+  //     {username: 'Matthew', title: 'test3', body: 'test code', notes: 'test notes', language: 'ruby', tags: [{tagName: 'ruby'}]},
+  //     {username: 'Matthew', title: 'test4', body: 'test code', notes: 'test notes', language: 'react', tags: [{tagName: 'react'}, {tagName: 'javascript'}]}
+  //   ]).then(done());
+  // });
+
+  afterEach((done) => {
+    Snippets.deleteMany({}).then(done());
+  });
+
+  it('should successfully search for a snippet by that user in the language specified', (done) => {
+    Snippets.insertMany([
+      {username: 'JennBowers', title: 'blah', body: 'test code', notes: 'test notes', language: 'node.js', tags: [{tagName: 'node.js'}, {tagName: 'javascript'}]},
+      {username: 'JennBowers', title: 'blah2', body: 'test code2', notes: 'test notes', language: 'java', tags: [{tagName: 'java'}, {tagName: 'back-end'}]},
+      {username: 'Matthew', title: 'blah3', body: 'test code', notes: 'test notes', language: 'ruby', tags: [{tagName: 'ruby'}]}
+    ]).then(() => {
+      Snippets.find({username: 'JennBowers', language: 'java'}).then((allSearchedSnippets) => {
+        // console.log(allSearchedSnippets[0]);
+        // expect(2).to.equal(2);
+        expect(allSearchedSnippets[0].username).to.equal('JennBowers');
+        expect(allSearchedSnippets[0].language).to.equal('java');
+        expect(allSearchedSnippets[0].title).to.equal('blah2');
+      });
+    }).then(done());
+  });
+});
+
 // create tests begin
 describe('creating a snippet successfully', () => {
   afterEach((done) => {
