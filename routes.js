@@ -12,6 +12,7 @@ passport.use(new BasicStrategy(
   (username, password, done) => {
     Users.findOne({username: username, password: password}).then(function(user) {
       if(!user) {
+        console.log('Auth denied');
         return done(null, false);
       } else {
         return done(null, username);
@@ -21,6 +22,7 @@ passport.use(new BasicStrategy(
 ));
 
 // passport.authenticate('basic', {session: false});
+// passport.authenticate('basic', { successRedirect: '/index', failureRedirect: '/' }),
 
 module.exports = (app) => {
   // app.get app.post etc goes in here with controller stuff
@@ -38,6 +40,10 @@ module.exports = (app) => {
 
   // ------- index page
   // renders index page
-  app.get('/index', passport.authenticate('basic', { successRedirect: '/index', failureRedirect: '/' }),  indexController.renderIndex);
+  app.get('/index', indexController.renderIndex);
+
+  // ------ create page
+  // renders create page
+  app.get('/create', createController.renderCreate);
 
 };

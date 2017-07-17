@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Create a CodeSnippet</title>
+  </head>
+  <body>
+    <h1>Create a CodeSnippet</h1>
+    <form class="snippet-create" action="/create" method="post">
+      <div class="title-snippet">
+        <label for="title">Title: </label>
+        <input type="text" name="title" placeholder="name your code snippet">
+      </div>
+      <div class="snippet-language">
+        <label for="language">Language: </label>
+        <input type="text" name="language" placeholder="What language is it in?">
+      </div>
+      <div class="snippet-code">
+        <label for="code">Code: </label>
+        <textarea name="code" rows="8" cols="80" placeholder="Copy your code in here"></textarea>
+      </div>
+      <div class="snippet-tags">
+        <label for="tags">Language: </label>
+        <input type="text" name="tags" placeholder="List tags for your snippet here">
+      </div>
+      <input type="submit" name="sumbit" value="Add to your snippets!">
+    </form>
+  </body>
+</html>
