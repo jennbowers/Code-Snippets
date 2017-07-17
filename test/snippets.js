@@ -13,14 +13,6 @@ const Users = require('../models/users');
 
 // index tests begin
 describe('searching through snippets', () => {
-  // beforeEach((done) => {
-  //   Snippets.insertMany([
-  //     {username: 'JennBowers', title: 'test1', body: 'test code', notes: 'test notes', language: 'node.js', tags: [{tagName: 'node.js'}, {tagName: 'javascript'}]},
-  //     {username: 'JennBowers', title: 'test2', body: 'test code2', notes: 'test notes', language: 'java', tags: [{tagName: 'java'}, {tagName: 'back-end'}]},
-  //     {username: 'Matthew', title: 'test3', body: 'test code', notes: 'test notes', language: 'ruby', tags: [{tagName: 'ruby'}]},
-  //     {username: 'Matthew', title: 'test4', body: 'test code', notes: 'test notes', language: 'react', tags: [{tagName: 'react'}, {tagName: 'javascript'}]}
-  //   ]).then(done());
-  // });
 
   afterEach((done) => {
     Snippets.deleteMany({}).then(done());

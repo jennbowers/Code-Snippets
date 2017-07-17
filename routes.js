@@ -45,6 +45,9 @@ module.exports = (app) => {
   // search for snippets in a specific language
   app.post('/language', indexController.searchLanguageIndex);
 
+  // search for snippets with a specific tag
+  app.post('/tags', indexController.searchTagsIndex);
+
   // ------ create page
   // renders create page
   app.get('/create', createController.renderCreate);

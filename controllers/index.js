@@ -24,6 +24,17 @@ module.exports = {
       context.displaySnippets = allSearchedSnippets;
       res.render('index', context);
     });
+  },
+  searchTagsIndex: (req, res) => {
+    var context = {
+      loggedIn: true,
+      name: req.session.username,
+      userId: req.session.userId,
+    };
+    Snippets.find({username: req.session.username, tags: {$elemMatch: {tagName: req.body.searchTags}}}).then((allSearchedSnippets) => {
+      context.displaySnippets = allSearchedSnippets;
+      res.render('index', context);
+    });
   }
 
 };
