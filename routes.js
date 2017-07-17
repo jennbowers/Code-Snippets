@@ -46,4 +46,7 @@ module.exports = (app) => {
   // renders create page
   app.get('/create', createController.renderCreate);
 
+  // adds snippet to database
+  app.post('/create', createController.addSnippetCreate);
+
 };
