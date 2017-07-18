@@ -23,15 +23,15 @@ module.exports= {
 
     var tagsArray = tagsString.split(',');
 
-    const snippet = new Snippets({username: context.name, title: title, body: body, notes: notes, language: language}).save().then((newSnippet) => {
-      tagsArray.forEach((tag) => {
-        console.log(newSnippet);
-        newSnippet.tags.push({tagName: tag});
-        console.log(newSnippet.tags);
-      });
-        newSnippet.save();
-        res.redirect('/index');
+    const newSnippet = new Snippets({username: context.name, title: title, body: body, notes: notes, language: language});
+    
+    tagsArray.forEach((tag) => {
+      console.log(newSnippet);
+      newSnippet.tags.push({tagName: tag});
+      console.log(newSnippet.tags);
     });
+      newSnippet.save();
+      res.redirect('/index');
   },
   addSnippetAPICreate: (req, res) => {
     var context = {

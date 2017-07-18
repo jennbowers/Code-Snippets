@@ -18,13 +18,22 @@ describe('rendering a specific snippet', () => {
   });
 
   it('should find a specific snippet to display', (done) => {
-    const newSnippet = new Snippets({username: 'JennBowers', title: 'testing1', body: 'test', notes: 'test notes', language: 'test', tags: [{tagName: 'test'}]}).save().then((newSnippet) => {
-      Snippets.findOne({_id: newSnippet._id}).then((result) => {
-        console.log(result);
-        expect(2).to.equal(2);
-        // expect(allSearchedSnippets[0].username).to.equal('JennBowers');
-        // expect(allSearchedSnippets[0].language).to.equal('java');
-        // expect(allSearchedSnippets[0].title).to.equal('blah2');
+
+    request(app)
+    .post('/api/:id')
+    .send({})
+    .expect(200)
+    .expect((res) => {
+      const newSnippet = new Snippets({username: 'JennBowers', title: 'testing1', body: 'test', notes: 'test notes', language: 'test', tags: [{tagName: 'test'}]}).save().then((newSnippet) => {
+        Snippets.findOne({_id: newSnippet._id}).then((result) => {
+          console.log(result);
+          expect(2).to.equal(2);
+          expect(result.username).to.equal('JennBowers');
+          expect(result.language).to.equal('test');
+          expect(result.language).to.not.equal('java');
+          expect(result.title).to.equal('testing1');
+          expect(result.title).to.not.equal('blah2');
+        });
       });
     }).then(done());
   });
@@ -45,12 +54,18 @@ describe('searching through snippets', () => {
   });
 
   it('API—should successfully search for a snippet by that user with a specified tag', (done) => {
-    Snippets.find({username: 'JennBowers', tags: {$elemMatch: {tagName: 'node.js'}}}).then((allSearchedSnippets) => {
-      // console.log(allSearchedSnippets);
-      expect(2).to.equal(2);
-    //   expect(allSearchedSnippets[0].username).to.equal('JennBowers');
-    //   expect(allSearchedSnippets[0].language).to.equal('java');
-    //   expect(allSearchedSnippets[0].title).to.equal('blah2');
+    request(app)
+    .post('/api/tags')
+    .send({})
+    .expect(200)
+    .expect((res) => {
+      Snippets.find({username: 'JennBowers', tags: {$elemMatch: {tagName: 'java'}}}).then((allSearchedSnippets) => {
+        expect(2).to.equal(2);
+        expect(allSearchedSnippets[0].username).to.equal('JennBowers');
+        expect(allSearchedSnippets[0].username).to.not.equal('Matthew');
+        expect(allSearchedSnippets[0].language).to.equal('java');
+        expect(allSearchedSnippets[0].title).to.equal('blah2');
+      });
     }).then(done());
   });
 

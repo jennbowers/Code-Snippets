@@ -13,5 +13,13 @@ module.exports = {
       context.displaySnippets = snippet;
       res.render('detail', context);
     });
+  },
+  renderAPIDetail: (req, res) => {
+    var context = {
+      loggedIn: true,
+    };
+    Snippets.find({title: 'testing1'}).then((snippet) => {
+      res.status(200).json(snippet);
+    });
   }
 };

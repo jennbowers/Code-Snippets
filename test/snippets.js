@@ -16,7 +16,6 @@ describe('rendering a specific snippet', () => {
   it('should find a specific snippet to display', (done) => {
     request(app)
     .post('/:id')
-    .send({})
     .expect(200);
     expect(2).to.equal(2);
     expect(2).to.not.equal(1);

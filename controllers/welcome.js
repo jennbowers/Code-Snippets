@@ -105,6 +105,7 @@ module.exports = {
           Users.findOne({username: inputUsername}).then((user) => {
             console.log(inputUsername);
             console.log(user);
+            console.log(user._id);
             req.session.username = user.username;
             req.session.userId = user._id;
             res.redirect('/index');

@@ -58,7 +58,7 @@ module.exports = (app) => {
   // search for snippets in a specific language API
   app.post('/api/language', indexController.searchAPILanguageIndex);
   // search for snippets with a specific tag API
-  // app.post('/api/tags', indexController.searchAPITagsIndex);
+  app.post('/api/tags', indexController.searchAPITagsIndex);
 
   // ------ create page
   // renders create page
@@ -75,5 +75,9 @@ module.exports = (app) => {
   // ------ detail page
   // renders specific snippet
   app.post('/:id', detailController.renderDetail);
+
+  // ------ detail API endpoint
+  // renders specific snippet API
+  app.post('/api/:id', detailController.renderAPIDetail);
 
 };
