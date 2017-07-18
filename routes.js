@@ -1,3 +1,5 @@
+const parseurl = require('parseurl');
+
 // require in controllers
 const createController = require('./controllers/create');
 const detailController = require('./controllers/detail');
@@ -20,6 +22,20 @@ passport.use(new BasicStrategy(
     });
   }
 ));
+
+// redirects back to login or signup if name is not already stored in session
+var backToLogin = function(req, res, next) {
+  var pathname = parseurl(req).pathname;
+  console.log(req.session.username);
+  console.log(pathname);
+  if (!req.session.username && (pathname != '/login' || pathname != '/signup')) {
+    res.redirect('/');
+  } else {
+    next();
+  }
+};
+
+
 
 // passport.authenticate('basic', {session: false});
 // passport.authenticate('basic', { successRedirect: '/index', failureRedirect: '/' }),
@@ -46,38 +62,38 @@ module.exports = (app) => {
 
   // ------- index page
   // renders index page
-  app.get('/index', indexController.renderIndex);
+  app.get('/index', backToLogin, indexController.renderIndex);
   // search for snippets in a specific language
-  app.post('/language', indexController.searchLanguageIndex);
+  app.post('/language', backToLogin, indexController.searchLanguageIndex);
   // search for snippets with a specific tag
-  app.post('/tags', indexController.searchTagsIndex);
+  app.post('/tags', backToLogin, indexController.searchTagsIndex);
 
   // ------- index API endpoints
   // renders index page API
-  app.get('/api/index', indexController.renderAPIIndex);
+  app.get('/api/index', passport.authenticate('basic', {session: false}), indexController.renderAPIIndex);
   // search for snippets in a specific language API
-  app.post('/api/language', indexController.searchAPILanguageIndex);
+  app.post('/api/language', passport.authenticate('basic', {session: false}), indexController.searchAPILanguageIndex);
   // search for snippets with a specific tag API
-  app.post('/api/tags', indexController.searchAPITagsIndex);
+  app.post('/api/tags', passport.authenticate('basic', {session: false}), indexController.searchAPITagsIndex);
 
   // ------ create page
   // renders create page
-  app.get('/create', createController.renderCreate);
+  app.get('/create', backToLogin, createController.renderCreate);
   // adds snippet to database
-  app.post('/create', createController.addSnippetCreate);
+  app.post('/create', backToLogin, createController.addSnippetCreate);
 
   // ------ create API endpoints
   // renders create page API
-  app.get('/api/create', createController.renderAPICreate);
+  app.get('/api/create', passport.authenticate('basic', {session: false}), createController.renderAPICreate);
   // adds snippet to database API
-  app.post('/api/create', createController.addSnippetAPICreate);
+  app.post('/api/create', passport.authenticate('basic', {session: false}), createController.addSnippetAPICreate);
 
   // ------ detail page
   // renders specific snippet
-  app.post('/:id', detailController.renderDetail);
+  app.post('/:id', backToLogin, detailController.renderDetail);
 
   // ------ detail API endpoint
   // renders specific snippet API
-  app.post('/api/:id', detailController.renderAPIDetail);
+  app.post('/api/:id', passport.authenticate('basic', {session: false}), detailController.renderAPIDetail);
 
 };

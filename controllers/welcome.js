@@ -10,7 +10,6 @@ const Users = require('../models/users');
 // password hashing
 const createUser = function(username, password) {
   return Users.create({username: username, password: createPasswordHashObject(password)});
-
 };
 
 const createPasswordHashObject = function(password, salt="") {

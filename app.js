@@ -3,7 +3,6 @@ const mustache = require('mustache');
 const mustacheExpress = require('mustache-express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const parseurl = require('parseurl');
 const routes = require('./routes');
 
 // mongoose
