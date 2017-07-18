@@ -41,6 +41,10 @@ module.exports = {
     req.session.username = '';
     res.render('welcome', {});
   },
+  renderAPIWelcome: (req, res) => {
+    req.session.username = '';
+    res.status(200).json({});
+  },
   loginWelcome: (req, res) => {
     let inputUsername = req.body.username;
     let inputPassword = req.body.password;
@@ -55,7 +59,6 @@ module.exports = {
           context.loginMsg = 'Incorrect Credentials, Please Try Again';
           res.render('welcome', context);
         }
-        console.log(req.session);
         Users.findOne({username: inputUsername}).then((user) => {
           req.session.username = inputUsername;
           req.session.userId = user._id;
@@ -65,6 +68,27 @@ module.exports = {
     } else if (!inputUsername || !inputPassword) {
       context.loginMsg = 'Please Enter All Information';
       res.render('welcome', context);
+    }
+  },
+  loginAPIWelcome: (req, res) => {
+    let inputUsername = req.body.username;
+    let inputPassword = req.body.password;
+    let context = {
+      loginMsg: ''
+    };
+    if(inputUsername && inputPassword) {
+      login(inputUsername, inputPassword).then(() => {
+        if (false) {
+          context.loginMsg = 'Incorrect Credentials, Please Try Again';
+          res.status(401).json(context);
+        }
+        Users.findOne({username: inputUsername}).then((user) => {
+          res.status(201).json(user);
+        });
+      });
+    } else if (!inputUsername || !inputPassword) {
+      context.loginMsg = 'Please Enter All Information';
+      res.json(context);
     }
   },
   signupWelcome: (req, res) => {

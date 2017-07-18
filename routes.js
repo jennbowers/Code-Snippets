@@ -36,6 +36,14 @@ module.exports = (app) => {
   // signing up, auto logs in and redirects to index
   app.post('/signup', welcomeController.signupWelcome);
 
+  // ------- welcome API endpoints
+  // renders welcome page API
+  app.get('/api/', welcomeController.renderAPIWelcome);
+  // logging in API
+  app.post('/api/login', welcomeController.loginAPIWelcome);
+  // signing up API
+  app.post('/api/signup', welcomeController.signupWelcome);
+
   // ------- index page
   // renders index page
   app.get('/index', indexController.renderIndex);
@@ -44,11 +52,25 @@ module.exports = (app) => {
   // search for snippets with a specific tag
   app.post('/tags', indexController.searchTagsIndex);
 
+  // ------- index API endpoints
+  // renders index page API
+  app.get('/api/index', indexController.renderAPIIndex);
+  // search for snippets in a specific language API
+  app.post('/api/language', indexController.searchAPILanguageIndex);
+  // search for snippets with a specific tag API
+  // app.post('/api/tags', indexController.searchAPITagsIndex);
+
   // ------ create page
   // renders create page
   app.get('/create', createController.renderCreate);
   // adds snippet to database
   app.post('/create', createController.addSnippetCreate);
+
+  // ------ create API endpoints
+  // renders create page API
+  app.get('/api/create', createController.renderAPICreate);
+  // adds snippet to database API
+  app.post('/api/create', createController.addSnippetAPICreate);
 
   // ------ detail page
   // renders specific snippet
