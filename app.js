@@ -9,8 +9,14 @@ const routes = require('./routes');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
-const env = process.env.NODE_ENV || "development";
-const mongoURL = require('./config.json')[env].mongoURL;
+const environment = process.env.NODE_ENV || "development";
+
+let mongoURL;
+if (environment === "production") {
+  mongoURL = process.env.MONGODB_URI;
+} else {
+  mongoURL = require("./config.json")[environment].mongoURL;
+}
 
 mongoose.connect(mongoURL);
 
